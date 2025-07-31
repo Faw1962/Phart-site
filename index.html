@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Phart | The Art of Creating the Unforgettable</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+    --primary: #A4D8F0;
+    --secondary: #FFE17D;
+    --accent: #FFF8DC;
+    --light: #FFFFFF;
+    --dark: #000000;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), #1a1a40);
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body.rtl {
+            direction: rtl;
+        }
+        
+        /* Logo Styles */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(74, 49, 170, 0.3);
+        }
+        
+        .logo-icon span {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1.5px;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 1000;
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .language-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .language-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            z-index: 900;
+            transition: var(--transition);
+        }
+        
+        .nav.scrolled {
+            background: rgba(10, 10, 35, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .nav__menu {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav__link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+            opacity: 0.9;
+        }
+        
+        .nav__link:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        
+        .nav__link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav__link:hover::after {
+            width: 100%;
+        }
+        
+        .nav__toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .nav__toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--light);
+            margin: 2px 0;
+            transition: var(--transition);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(74, 49, 170, 0.2) 0%, rgba(10, 10, 35, 0.9) 70%);
+            z-index: -1;
+        }
+        
+        .hero__content {
+            text-align: center;
+            max-width: 900px;
+            z-index: 1;
+            padding-top: 80px;
+        }
+        
+        .hero__title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero__title-line {
+            display: block;
+        }
+        
+        .hero__title-line--accent {
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .hero__tagline {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            margin: 0 10px;
+        }
+        
+        .btn--primary {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn--primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        .btn--secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn--secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        /* Sections */
+        section {
+            padding: 120px 5%;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about__content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about__text {
+            flex: 1;
+        }
+        
+        .about__visual {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about__founder h3 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .about__founder-title {
+            font-weight: 600;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        .about__description {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .about__image-container {
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .about__image {
+            width: 100%;
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .about__image-container:hover .about__image {
+            transform: scale(1.05);
+        }
+        
+        .about__stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat {
+            text-align: center;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px 20px;
+            border-radius: 15px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .stat:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat__number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .stat__label {
+            font-size: 1rem;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Projects Section */
+        .projects__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-card__image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .project-card__content {
+            padding: 25px;
+        }
+        
+        .project-card__title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .project-card__description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        /* Services Section */
+        .services__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .service-card__icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .service-card__title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .service-card__description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        /* Approach Section */
+        .approach__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .approach__item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .approach__item:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .approach__number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.3;
+            margin-bottom: 20px;
+        }
+        
+        .approach__title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .approach__description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        .contact__content {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact__form-container {
+            flex: 1;
+        }
+        
+        .contact__form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 16px;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .btn--full {
+            width: 100%;
+        }
+        
+        .contact__info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .contact__social h3, .contact__partnerships h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--light);
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+        
+        .contact__partnerships p {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 50px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .footer__content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer__text {
+            opacity: 0.7;
+            max-width: 700px;
+            margin: 20px auto 0;
+            line-height: 1.6;
+        }
+        
+        /* Cursor and Smile Effect */
+        #cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.3);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: width 0.2s, height 0.2s;
+        }
+        
+        #cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 215, 0, 0.5);
+        }
+        
+        .smile-trail {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.7;
+            animation: fadeOut 1s forwards;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+        
+        /* Background Elements */
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(60px);
+            opacity: 0.15;
+        }
+        
+        .bg-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: 10%;
+            left: 5%;
+        }
+        
+        .bg-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            bottom: 10%;
+            right: 10%;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero__title {
+                font-size: 3.5rem;
+            }
+            
+            .about__content, .contact__content {
+                flex-direction: column;
+            }
+            
+            .about__stats {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav__menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background: var(--primary);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                z-index: 800;
+                padding: 20px;
+                backdrop-filter: blur(10px);
+            }
+            
+            .nav__menu.active {
+                right: 0;
+            }
+            
+            .nav__toggle {
+                display: flex;
+                z-index: 900;
+            }
+            
+            .nav__toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .nav__toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .nav__toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .hero__title {
+                font-size: 2.8rem;
+            }
+            
+            .hero__tagline {
+                font-size: 1.2rem;
+            }
+            
+            section {
+                padding: 80px 5%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero__title {
+                font-size: 2.3rem;
+            }
+            
+            .btn {
+                margin: 10px 0;
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero__cta {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .projects__grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    
+
+.glossy-text {
+    background: linear-gradient(90deg, #A4D8F0, #FFF8DC, #FFE17D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+</style>
+</head>
+<body>
+<!-- Background Elements -->
+<div class="bg-element bg-1"></div>
+<div class="bg-element bg-2"></div>
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<!-- Language Switcher -->
+<div class="language-switcher">
+<button class="language-btn active" data-lang="en">EN</button>
+<button class="language-btn" data-lang="fr">FR</button>
+<button class="language-btn" data-lang="ar">AR</button>
+</div>
+<!-- Navigation -->
+<nav class="nav">
+<div class="nav__container">
+<a class="logo" href="#home"><img alt="PHART Logo" src="logo8.png" style="height: 60px; object-fit: contain;"/></a>
+<div class="nav__menu" id="nav-menu">
+<a class="nav__link" data-i18n="nav.home" href="#home">Home</a>
+<a class="nav__link" data-i18n="nav.about" href="#about">About</a>
+<a class="nav__link" data-i18n="nav.projects" href="#projects">Projects</a>
+<a class="nav__link" data-i18n="nav.services" href="#services">Services</a>
+<a class="nav__link" data-i18n="nav.approach" href="#approach">Our Approach</a>
+<a class="nav__link" data-i18n="nav.contact" href="#contact">Contact</a>
+</div>
+<div class="nav__toggle" id="nav-toggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+
+
+<section class="hero hero--parallax" id="home" aria-label="Concert hero image with illuminated ruins at sunset" style="position: relative; height: 100vh; background: none;">
+  <picture>
+    <source srcset="background-concert.webp" type="image/webp">
+    <img 
+      src="background-concert.jpg" 
+      alt="Concert crowd in front of ancient ruins at dusk" 
+      class="hero__image lazyload" 
+      loading="lazy"
+      width="1920"
+      height="1080"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;"
+    />
+  </picture>
+  <div class="hero__overlay" style="position:absolute; inset:0; background:rgba(0,0,0,0.4); z-index:-1;"></div>
+  <div class="hero__content-wrapper" style="display: flex; align-items: center; justify-content: center; text-align: center; height: 100%; width: 100%;">
+    <div class="hero__content" style="max-width: 960px; padding: 0 1rem;">
+      <h1 class="hero__title glossy-text">
+        <span class="hero__title-line" data-i18n="hero.line1">The Art of</span>
+        <span class="hero__title-line hero__title-line--accent" data-i18n="hero.line2">Creating the</span>
+        <span class="hero__title-line" data-i18n="hero.line3">Unforgettable</span>
+      </h1>
+      <p class="hero__tagline" data-i18n="hero.tagline">
+        Innovative Music Production – Where Culture, Concerts, and Emotion Converge to Create Lasting Experiences.
+      </p>
+      <div class="hero__cta" style="margin-top: 2rem;">
+        <a href="#projects" class="btn btn--primary" data-i18n="hero.cta1">Découvrez Nos Réalisations</a>
+        <a href="#contact" class="btn btn--secondary" data-i18n="hero.cta2">Contactez-Nous</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- About Section -->
+<section class="about" id="about">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title glossy-text" data-i18n="about.title">About Phart</h2>
+<div class="section-subtitle" data-i18n="about.subtitle">Visionary Leadership in Music Production</div>
+</div>
+<div class="about__content">
+<div class="about__text">
+<div class="about__founder">
+<h3>Mohamed Amine Jarraya</h3>
+<p class="about__founder-title" data-i18n="about.founderTitle">Founder &amp; Creative Director</p>
+</div>
+<p class="about__description" data-i18n="about.description1">
+                        Phart represents the fusion of artistic vision and technical excellence in music event production. 
+                        Founded by Mohamed Amine Jarraya, a passionate connoisseur of musical culture and technical expert 
+                        in audio and video production, we specialize in creating large-scale, memorable concerts and innovative 
+                        music experiences that resonate with audiences worldwide.
+                    </p>
+<p class="about__description" data-i18n="about.description2">
+                        Our strategic approach combines creativity with expertise in complex project management and team 
+                        leadership, ensuring every production exceeds expectations and creates lasting emotional connections 
+                        with audiences. We believe in the transformative power of music to create unforgettable moments.
+                    </p>
+<div class="about__stats">
+<div class="stat">
+<div class="stat__number">50+</div>
+<div class="stat__label" data-i18n="about.stat1">Events Produced</div>
+</div>
+<div class="stat">
+<div class="stat__number">100K+</div>
+<div class="stat__label" data-i18n="about.stat2">Audience Reached</div>
+</div>
+<div class="stat">
+<div class="stat__number">25+</div>
+<div class="stat__label" data-i18n="about.stat3">Artists Collaborated</div>
+</div>
+</div>
+</div>
+<div class="about__visual">
+<div class="about__image-container">
+<img alt="Mohamed Amine Jarraya" class="about__image" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Section -->
+<section class="projects" id="projects">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title glossy-text" data-i18n="projects.title">Featured Projects</h2>
+<div class="section-subtitle" data-i18n="projects.subtitle">Showcasing Artistic Excellence</div>
+</div>
+<div class="projects__grid" id="projects-grid">
+<div class="project-card">
+<img alt="Music Festival" class="project-card__image" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80"/>
+<div class="project-card__content">
+<h3 class="project-card__title" data-i18n="projects.project1.title">Electric Dreams Festival</h3>
+<p class="project-card__description" data-i18n="projects.project1.description">A 3-day electronic music festival featuring top international DJs and immersive visual experiences.</p>
+</div>
+</div>
+<div class="project-card">
+<img alt="Concert" class="project-card__image" src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80"/>
+<div class="project-card__content">
+<h3 class="project-card__title" data-i18n="projects.project2.title">Symphony Under the Stars</h3>
+<p class="project-card__description" data-i18n="projects.project2.description">An open-air classical concert with innovative lighting and projection mapping.</p>
+</div>
+</div>
+<div class="project-card">
+<img alt="Stage Design" class="project-card__image" src="https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80"/>
+<div class="project-card__content">
+<h3 class="project-card__title" data-i18n="projects.project3.title">Urban Beats Tour</h3>
+<p class="project-card__description" data-i18n="projects.project3.description">A nationwide hip-hop tour featuring innovative stage design and interactive elements.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section class="services" id="services">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title glossy-text" data-i18n="services.title">Our Services</h2>
+<div class="section-subtitle" data-i18n="services.subtitle">Comprehensive Production Solutions</div>
+</div>
+<div class="services__grid">
+<div class="service-card">
+<div class="service-card__icon"><i class="fas fa-music"></i></div>
+<h3 class="service-card__title" data-i18n="services.service1.title">Concert Production</h3>
+<p class="service-card__description" data-i18n="services.service1.description">
+                        End-to-end concert production services, from concept development to final execution, 
+                        ensuring seamless and memorable live music experiences.
+                    </p>
+</div>
+<div class="service-card">
+<div class="service-card__icon"><i class="fas fa-palette"></i></div>
+<h3 class="service-card__title" data-i18n="services.service2.title">Artistic Direction</h3>
+<p class="service-card__description" data-i18n="services.service2.description">
+                        Creative vision and artistic leadership that transforms musical concepts into 
+                        immersive experiences that resonate with audiences.
+                    </p>
+</div>
+<div class="service-card">
+<div class="service-card__icon"><i class="fas fa-theater-masks"></i></div>
+<h3 class="service-card__title" data-i18n="services.service3.title">Stage &amp; Scenic Design</h3>
+<p class="service-card__description" data-i18n="services.service3.description">
+                        Innovative stage design and scenic production that creates visually stunning 
+                        environments for unforgettable performances.
+                    </p>
+</div>
+<div class="service-card">
+<div class="service-card__icon"><i class="fas fa-volume-up"></i></div>
+<h3 class="service-card__title" data-i18n="services.service4.title">Audio &amp; Video Engineering</h3>
+<p class="service-card__description" data-i18n="services.service4.description">
+                        Technical expertise in sound engineering and video production, delivering 
+                        pristine audio-visual quality for every event.
+                    </p>
+</div>
+<div class="service-card">
+<div class="service-card__icon"><i class="fas fa-chart-line"></i></div>
+<h3 class="service-card__title" data-i18n="services.service5.title">Budget &amp; Logistics Management</h3>
+<p class="service-card__description" data-i18n="services.service5.description">
+                        Strategic project management ensuring efficient resource allocation and 
+                        seamless coordination of all production elements.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Approach Section -->
+<section class="approach" id="approach">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title glossy-text" data-i18n="approach.title">Our Approach</h2>
+<div class="section-subtitle" data-i18n="approach.subtitle">Innovation Through Excellence</div>
+</div>
+<div class="approach__content">
+<div class="approach__grid">
+<div class="approach__item">
+<div class="approach__number">01</div>
+<h3 class="approach__title" data-i18n="approach.item1.title">Innovation</h3>
+<p class="approach__description" data-i18n="approach.item1.description">
+                            We push creative boundaries, incorporating cutting-edge technology and 
+                            fresh artistic concepts to deliver groundbreaking experiences.
+                        </p>
+</div>
+<div class="approach__item">
+<div class="approach__number">02</div>
+<h3 class="approach__title" data-i18n="approach.item2.title">Technical Excellence</h3>
+<p class="approach__description" data-i18n="approach.item2.description">
+                            Our commitment to technical precision ensures flawless execution, 
+                            from sound engineering to visual production.
+                        </p>
+</div>
+<div class="approach__item">
+<div class="approach__number">03</div>
+<h3 class="approach__title" data-i18n="approach.item3.title">Collaboration</h3>
+<p class="approach__description" data-i18n="approach.item3.description">
+                            We work closely with artists, venues, and stakeholders to create 
+                            unified visions that exceed expectations.
+                        </p>
+</div>
+<div class="approach__item">
+<div class="approach__number">04</div>
+<h3 class="approach__title" data-i18n="approach.item4.title">Adaptability</h3>
+<p class="approach__description" data-i18n="approach.item4.description">
+                            Our flexible approach allows us to adapt to changing requirements 
+                            while maintaining the highest quality standards.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="contact" id="contact">
+<div class="container">
+<div class="section-header">
+<h2 class="section-title glossy-text" data-i18n="contact.title">Get In Touch</h2>
+<div class="section-subtitle" data-i18n="contact.subtitle">Let's Create Something Unforgettable</div>
+</div>
+<div class="contact__content">
+<div class="contact__form-container">
+<form class="contact__form" id="contact-form">
+<div class="form-group">
+<input class="form-input" data-i18n-placeholder="contact.name" placeholder="Your Name" required="" type="text"/>
+</div>
+<div class="form-group">
+<input class="form-input" data-i18n-placeholder="contact.email" placeholder="Your Email" required="" type="email"/>
+</div>
+<div class="form-group">
+<input class="form-input" data-i18n-placeholder="contact.projectType" placeholder="Project Type" type="text"/>
+</div>
+<div class="form-group">
+<textarea class="form-input form-textarea" data-i18n-placeholder="contact.message" placeholder="Tell us about your project" required="" rows="6"></textarea>
+</div>
+<button class="btn btn--primary btn--full" data-i18n="contact.submit" type="submit">Send Message</button>
+</form>
+</div>
+<div class="contact__info">
+<div class="contact__social">
+<h3 data-i18n="contact.socialTitle">Follow Our Journey</h3>
+<div class="social-links">
+<a class="social-link" href="#">
+<i class="fab fa-instagram"></i>
+<span data-i18n="contact.instagram">Instagram</span>
+</a>
+<a class="social-link" href="#">
+<i class="fab fa-youtube"></i>
+<span data-i18n="contact.youtube">YouTube</span>
+</a>
+<a class="social-link" href="#">
+<i class="fab fa-linkedin-in"></i>
+<span data-i18n="contact.linkedin">LinkedIn</span>
+</a>
+</div>
+</div>
+<div class="contact__partnerships">
+<h3 data-i18n="contact.partnershipsTitle">Partnership Opportunities</h3>
+<p data-i18n="contact.partnershipsText">We're always looking for new collaborations with artists, venues, and creative partners.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="footer">
+<div class="footer__content">
+<a class="logo" href="#home"><img alt="PHART Logo" src="logo8.png" style="height: 60px; object-fit: contain;"/></a>
+<div class="footer__text" data-i18n="footer.copyright">
+                © 2024 Phart. All rights reserved. Creating unforgettable experiences through innovative music production.
+            </div>
+</div>
+</footer>
+<script>
+        // Translation Data
+        const translations = {
+            en: {
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.projects": "Projects",
+                "nav.services": "Services",
+                "nav.approach": "Our Approach",
+                "nav.contact": "Contact",
+                "hero.line1": "The Art of",
+                "hero.line2": "Creating the",
+                "hero.line3": "Unforgettable",
+                "hero.tagline": "Innovative Music Production – Where Culture, Concerts, and Emotion Converge to Create Lasting Experiences.",
+                "hero.cta1": "Explore Our Work",
+                "hero.cta2": "Get In Touch",
+                "about.title": "About Phart",
+                "about.subtitle": "Visionary Leadership in Music Production",
+                "about.founderTitle": "Founder & Creative Director",
+                "about.description1": "Phart represents the fusion of artistic vision and technical excellence in music event production. Founded by Mohamed Amine Jarraya, a passionate connoisseur of musical culture and technical expert in audio and video production, we specialize in creating large-scale, memorable concerts and innovative music experiences that resonate with audiences worldwide.",
+                "about.description2": "Our strategic approach combines creativity with expertise in complex project management and team leadership, ensuring every production exceeds expectations and creates lasting emotional connections with audiences. We believe in the transformative power of music to create unforgettable moments.",
+                "about.stat1": "Events Produced",
+                "about.stat2": "Audience Reached",
+                "about.stat3": "Artists Collaborated",
+                "projects.title": "Featured Projects",
+                "projects.subtitle": "Showcasing Artistic Excellence",
+                "projects.project1.title": "Electric Dreams Festival",
+                "projects.project1.description": "A 3-day electronic music festival featuring top international DJs and immersive visual experiences.",
+                "projects.project2.title": "Symphony Under the Stars",
+                "projects.project2.description": "An open-air classical concert with innovative lighting and projection mapping.",
+                "projects.project3.title": "Urban Beats Tour",
+                "projects.project3.description": "A nationwide hip-hop tour featuring innovative stage design and interactive elements.",
+                "services.title": "Our Services",
+                "services.subtitle": "Comprehensive Production Solutions",
+                "services.service1.title": "Concert Production",
+                "services.service1.description": "End-to-end concert production services, from concept development to final execution, ensuring seamless and memorable live music experiences.",
+                "services.service2.title": "Artistic Direction",
+                "services.service2.description": "Creative vision and artistic leadership that transforms musical concepts into immersive experiences that resonate with audiences.",
+                "services.service3.title": "Stage & Scenic Design",
+                "services.service3.description": "Innovative stage design and scenic production that creates visually stunning environments for unforgettable performances.",
+                "services.service4.title": "Audio & Video Engineering",
+                "services.service4.description": "Technical expertise in sound engineering and video production, delivering pristine audio-visual quality for every event.",
+                "services.service5.title": "Budget & Logistics Management",
+                "services.service5.description": "Strategic project management ensuring efficient resource allocation and seamless coordination of all production elements.",
+                "approach.title": "Our Approach",
+                "approach.subtitle": "Innovation Through Excellence",
+                "approach.item1.title": "Innovation",
+                "approach.item1.description": "We push creative boundaries, incorporating cutting-edge technology and fresh artistic concepts to deliver groundbreaking experiences.",
+                "approach.item2.title": "Technical Excellence",
+                "approach.item2.description": "Our commitment to technical precision ensures flawless execution, from sound engineering to visual production.",
+                "approach.item3.title": "Collaboration",
+                "approach.item3.description": "We work closely with artists, venues, and stakeholders to create unified visions that exceed expectations.",
+                "approach.item4.title": "Adaptability",
+                "approach.item4.description": "Our flexible approach allows us to adapt to changing requirements while maintaining the highest quality standards.",
+                "contact.title": "Get In Touch",
+                "contact.subtitle": "Let's Create Something Unforgettable",
+                "contact.name": "Your Name",
+                "contact.email": "Your Email",
+                "contact.projectType": "Project Type",
+                "contact.message": "Tell us about your project",
+                "contact.submit": "Send Message",
+                "contact.socialTitle": "Follow Our Journey",
+                "contact.instagram": "Instagram",
+                "contact.youtube": "YouTube",
+                "contact.linkedin": "LinkedIn",
+                "contact.partnershipsTitle": "Partnership Opportunities",
+                "contact.partnershipsText": "We're always looking for new collaborations with artists, venues, and creative partners.",
+                "footer.copyright": "© 2024 Phart. All rights reserved. Creating unforgettable experiences through innovative music production."
+            },
+            fr: {
+                "nav.home": "Accueil",
+                "nav.about": "À propos",
+                "nav.projects": "Projets",
+                "nav.services": "Services",
+                "nav.approach": "Notre Approche",
+                "nav.contact": "Contact",
+                "hero.line1": "L'Art de",
+                "hero.line2": "Créer des",
+                "hero.line3": "Expériences Inoubliables",
+                "hero.tagline": "Production Musicale Innovante – Où Culture, Concerts et Émotion Convergent pour Créer des Expériences Durables.",
+                "hero.cta1": "Découvrez Nos Réalisations",
+                "hero.cta2": "Contactez-Nous",
+                "about.title": "À Propos de Phart",
+                "about.subtitle": "Leadership Visionnaire en Production Musicale",
+                "about.founderTitle": "Fondateur & Directeur Artistique",
+                "about.description1": "Phart représente la fusion d'une vision artistique et d'une excellence technique dans la production d'événements musicaux. Fondé par Mohamed Amine Jarraya, un passionné de culture musicale et expert technique en production audio et vidéo, nous nous spécialisons dans la création de concerts mémorables à grande échelle et d'expériences musicales innovantes qui résonnent avec les publics du monde entier.",
+                "about.description2": "Notre approche stratégique combine créativité et expertise en gestion de projet complexe et leadership d'équipe, garantissant que chaque production dépasse les attentes et crée des connexions émotionnelles durables avec le public. Nous croyons au pouvoir transformateur de la musique pour créer des moments inoubliables.",
+                "about.stat1": "Événements Produits",
+                "about.stat2": "Spectateurs Atteints",
+                "about.stat3": "Artistes Collaborés",
+                "projects.title": "Projets Sélectionnés",
+                "projects.subtitle": "Mettant en Valeur l'Excellence Artistique",
+                "projects.project1.title": "Festival Electric Dreams",
+                "projects.project1.description": "Un festival de musique électronique de 3 jours mettant en vedette des DJ internationaux de premier plan et des expériences visuelles immersives.",
+                "projects.project2.title": "Symphonie Sous les Étoiles",
+                "projects.project2.description": "Un concert classique en plein air avec éclairage innovant et projection mapping.",
+                "projects.project3.title": "Tournée Urban Beats",
+                "projects.project3.description": "Une tournée nationale de hip-hop mettant en vedette une conception de scène innovante et des éléments interactifs.",
+                "services.title": "Nos Services",
+                "services.subtitle": "Solutions de Production Complètes",
+                "services.service1.title": "Production de Concerts",
+                "services.service1.description": "Services complets de production de concerts, du développement du concept à la réalisation finale, assurant des expériences musicales live fluides et mémorables.",
+                "services.service2.title": "Direction Artistique",
+                "services.service2.description": "Vision créative et leadership artistique qui transforment les concepts musicaux en expériences immersives qui résonnent avec le public.",
+                "services.service3.title": "Conception de Scène et Décors",
+                "services.service3.description": "Conception de scène innovante et production scénique qui crée des environnements visuellement époustouflants pour des performances inoubliables.",
+                "services.service4.title": "Ingénierie Audio et Vidéo",
+                "services.service4.description": "Expertise technique en ingénierie du son et production vidéo, offrant une qualité audio-visuelle impeccable pour chaque événement.",
+                "services.service5.title": "Gestion Budgétaire et Logistique",
+                "services.service5.description": "Gestion stratégique de projet assurant une allocation efficace des ressources et une coordination fluide de tous les éléments de production.",
+                "approach.title": "Notre Approche",
+                "approach.subtitle": "Innovation par l'Excellence",
+                "approach.item1.title": "Innovation",
+                "approach.item1.description": "Nous repoussons les limites créatives, intégrant des technologies de pointe et des concepts artistiques frais pour offrir des expériences révolutionnaires.",
+                "approach.item2.title": "Excellence Technique",
+                "approach.item2.description": "Notre engagement envers la précision technique garantit une exécution impeccable, de l'ingénierie du son à la production visuelle.",
+                "approach.item3.title": "Collaboration",
+                "approach.item3.description": "Nous travaillons en étroite collaboration avec les artistes, les lieux et les parties prenantes pour créer des visions unifiées qui dépassent les attentes.",
+                "approach.item4.title": "Adaptabilité",
+                "approach.item4.description": "Notre approche flexible nous permet de nous adapter aux exigences changeantes tout en maintenant les normes de qualité les plus élevées.",
+                "contact.title": "Contactez-Nous",
+                "contact.subtitle": "Créons Ensemble Quelque Chose d'Inoubliable",
+                "contact.name": "Votre Nom",
+                "contact.email": "Votre Email",
+                "contact.projectType": "Type de Projet",
+                "contact.message": "Parlez-nous de votre projet",
+                "contact.submit": "Envoyer le Message",
+                "contact.socialTitle": "Suivez Notre Parcours",
+                "contact.instagram": "Instagram",
+                "contact.youtube": "YouTube",
+                "contact.linkedin": "LinkedIn",
+                "contact.partnershipsTitle": "Opportunités de Partenariat",
+                "contact.partnershipsText": "Nous sommes toujours à la recherche de nouvelles collaborations avec des artistes, des lieux et des partenaires créatifs.",
+                "footer.copyright": "© 2024 Phart. Tous droits réservés. Création d'expériences inoubliables grâce à une production musicale innovante."
+            },
+            ar: {
+                "nav.home": "الرئيسية",
+                "nav.about": "من نحن",
+                "nav.projects": "المشاريع",
+                "nav.services": "الخدمات",
+                "nav.approach": "نهجنا",
+                "nav.contact": "اتصل بنا",
+                "hero.line1": "فن",
+                "hero.line2": "خلق",
+                "hero.line3": "اللحظات التي لا تنسى",
+                "hero.tagline": "إنتاج موسيقي مبتكر – حيث تلتقي الثقافة والحفلات والعاطفة لخلق تجارب دائمة.",
+                "hero.cta1": "استكشف أعمالنا",
+                "hero.cta2": "تواصل معنا",
+                "about.title": "عن فارت",
+                "about.subtitle": "الريادة في الإنتاج الموسيقي",
+                "about.founderTitle": "المؤسس والمدير الإبداعي",
+                "about.description1": "تمثل فارت اندماج الرؤية الفنية والتميز التقني في إنتاج الفعاليات الموسيقية. تأسست على يد محمد أمين الجرايا، خبير شغوف بالثقافة الموسيقية والخبير التقني في الإنتاج الصوتي والمرئي، نحن متخصصون في خلق حفلات موسيقية كبيرة لا تنسى وتجارب موسيقية مبتكرة تلقى صدى لدى الجماهير في جميع أنحاء العالم.",
+                "about.description2": "يجمع نهجنا الاستراتيجي بين الإبداع والخبرة في إدارة المشاريع المعقدة وقيادة الفرق، مما يضمن تفوق كل إنتاج على التوقعات وخلق روابط عاطفية دائمة مع الجمهور. نحن نؤمن بالقوة التحويلية للموسيقى لخلق لحظات لا تنسى.",
+                "about.stat1": "فعالية منتجة",
+                "about.stat2": "مشاهد تم الوصول إليهم",
+                "about.stat3": "فنان تعاون معهم",
+                "projects.title": "أبرز المشاريع",
+                "projects.subtitle": "عرض التميز الفني",
+                "projects.project1.title": "مهرجان أحلام كهربائية",
+                "projects.project1.description": "مهرجان موسيقى إلكترونية لمدة 3 أيام يضم أفضل دي جي دولي وتجارب بصرية غامرة.",
+                "projects.project2.title": "سمفونية تحت النجوم",
+                "projects.project2.description": "حفلة موسيقية كلاسيكية في الهواء الطلق مع إضاءة مبتكرة وتقنية عرض الخرائط.",
+                "projects.project3.title": "جولة إيقاعات حضرية",
+                "projects.project3.description": "جولة هيب هوب وطنية تتميز بتصميم مسرح مبتكر وعناصر تفاعلية.",
+                "services.title": "خدماتنا",
+                "services.subtitle": "حلول إنتاج شاملة",
+                "services.service1.title": "إنتاج الحفلات",
+                "services.service1.description": "خدمات إنتاج حفلات كاملة، من تطوير المفهوم إلى التنفيذ النهائي، مما يضمن تجارب موسيقية حية سلسة ولا تنسى.",
+                "services.service2.title": "الإخراج الفني",
+                "services.service2.description": "رؤية إبداعية وقيادة فنية تحول المفاهيم الموسيقية إلى تجارب غامرة تلقى صدى لدى الجمهور.",
+                "services.service3.title": "تصميم المسرح والديكور",
+                "services.service3.description": "تصميم مسرح مبتكر وإنتاج ديكور يخلق بيئات بصرية مذهلة لعروض لا تنسى.",
+                "services.service4.title": "هندسة الصوت والصورة",
+                "services.service4.description": "خبرة تقنية في هندسة الصوت وإنتاج الفيديو، تقديم جودة صوتية وبصرية لا تشوبها شائبة لكل حدث.",
+                "services.service5.title": "إدارة الميزانية والخدمات اللوجستية",
+                "services.service5.description": "إدارة مشاريع استراتيجية تضمن تخصيص الموارد بكفاءة وتنسيق سلس لجميع عناصر الإنتاج.",
+                "approach.title": "نهجنا",
+                "approach.subtitle": "الابتكار من خلال التميز",
+                "approach.item1.title": "الابتكار",
+                "approach.item1.description": "ندفع حدود الإبداع، دمج التكنولوجيا المتطورة والمفاهيم الفنية الجديدة لتقديم تجارب رائدة.",
+                "approach.item2.title": "التميز التقني",
+                "approach.item2.description": "التزامنا بالدقة التقنية يضمن تنفيذاً لا تشوبه شائبة، من هندسة الصوت إلى الإنتاج المرئي.",
+                "approach.item3.title": "التعاون",
+                "approach.item3.description": "نعمل عن كثب مع الفنانين والأماكن وأصحاب المصلحة لخلق رؤى موحدة تتجاوز التوقعات.",
+                "approach.item4.title": "المرونة",
+                "approach.item4.description": "يسمح نهجنا المرن بالتكيف مع المتطلبات المتغيرة مع الحفاظ على أعلى معايير الجودة.",
+                "contact.title": "تواصل معنا",
+                "contact.subtitle": "لنخلق معاً شيئاً لا ينسى",
+                "contact.name": "اسمك",
+                "contact.email": "بريدك الإلكتروني",
+                "contact.projectType": "نوع المشروع",
+                "contact.message": "أخبرنا عن مشروعك",
+                "contact.submit": "إرسال الرسالة",
+                "contact.socialTitle": "تابع رحلتنا",
+                "contact.instagram": "إنستغرام",
+                "contact.youtube": "يوتيوب",
+                "contact.linkedin": "لينكدإن",
+                "contact.partnershipsTitle": "فرص الشراكة",
+                "contact.partnershipsText": "نحن نبحث دائماً عن تعاونات جديدة مع الفنانين والأماكن والشركاء المبدعين.",
+                "footer.copyright": "© 2024 فارت. جميع الحقوق محفوظة. خلق تجارب لا تنسى من خلال الإنتاج الموسيقي المبتكر."
+            }
+        };
+
+        // Language switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageBtns = document.querySelectorAll('.language-btn');
+            const defaultLang = 'en';
+            let currentLang = defaultLang;
+            
+            // Set language
+            function setLanguage(lang) {
+                currentLang = lang;
+                
+                // Update active button
+                languageBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Update text elements
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        element.textContent = translations[lang][key];
+                    }
+                });
+                
+                // Update placeholder attributes
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-i18n-placeholder');
+                    if (translations[lang] && translations[lang][key]) {
+                        element.setAttribute('placeholder', translations[lang][key]);
+                    }
+                });
+                
+                // Update RTL for Arabic
+                if (lang === 'ar') {
+                    document.body.classList.add('rtl');
+                } else {
+                    document.body.classList.remove('rtl');
+                }
+            }
+            
+            // Language button click event
+            languageBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    setLanguage(lang);
+                });
+            });
+            
+            // Initialize with default language
+            setLanguage(defaultLang);
+            
+            // Nav toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            navToggle.addEventListener('click', () => {
+                navToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close menu when clicking a link
+            document.querySelectorAll('.nav__link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // Nav scroll effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('.nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+            
+            // Custom cursor
+            const cursor = document.getElementById('cursor');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                // Create smile trail
+                createSmileTrail(e.clientX, e.clientY);
+            });
+            
+            // Hover effects
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover');
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover');
+                });
+            });
+            
+            // Create smile trail function
+            function createSmileTrail(x, y) {
+                const trail = document.createElement('div');
+                trail.className = 'smile-trail';
+                trail.style.left = x + 'px';
+                trail.style.top = y + 'px';
+                document.body.appendChild(trail);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    trail.remove();
+                }, 1000);
+            }
+            
+            // Form submission
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert(translations[currentLang].contact.submit + ' ' + translations[currentLang].contact.submit + '!');
+                contactForm.reset();
+            });
+        });
+    </script>
+
+<script>
+  // Light parallax effect on scroll
+  window.addEventListener('scroll', () => {
+    const heroImage = document.querySelector('.hero__image');
+    if (heroImage) {
+      const scrollY = window.scrollY;
+      heroImage.style.transform = `translateY(${scrollY * 0.2}px)`;
+    }
+  });
+</script>
+</body>
+
+</html>
